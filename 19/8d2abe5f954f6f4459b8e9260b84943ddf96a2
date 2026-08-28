@@ -1,0 +1,22 @@
+switchbot/adv_parser.py
+  h_538e101a9330e8 901-912
+switchbot/const/__init__.py
+  h_538e101a9330e8 129
+switchbot/devices/lock.py
+  h_538e101a9330e8 25,35,45,55,69,110,152-156,189-192
+tests/test_adv_parser.py
+  h_538e101a9330e8 3017-3066,3253-3277,3363-3370
+tests/test_lock.py
+  h_538e101a9330e8 28,69,99,129,233-245,806
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "198d2abe5f954f6f4459b8e9260b84943ddf96a2",
+  "prompts": {},
+  "humans": {
+    "h_538e101a9330e8": {
+      "author": "testdev <testdev@onero.com>"
+    }
+  }
+}
