@@ -25,6 +25,7 @@ def create_device_for_command_testing(model: str):
         SwitchbotModel.LOCK_LITE,
         SwitchbotModel.LOCK_PRO,
         SwitchbotModel.LOCK_ULTRA,
+        SwitchbotModel.LOCK_ULTRA_2,
         SwitchbotModel.LOCK_VISION,
         SwitchbotModel.LOCK_VISION_PRO,
         SwitchbotModel.LOCK_PRO_WIFI,
@@ -65,6 +66,7 @@ def test_default_model_classvar():
         (SwitchbotModel.LOCK_LITE, b"W\x0fN\x01\x01\x10\x81"),
         (SwitchbotModel.LOCK_PRO, b"W\x0fN\x01\x01\x10\x85"),
         (SwitchbotModel.LOCK_ULTRA, b"W\x0fN\x01\x01\x10\x86"),
+        (SwitchbotModel.LOCK_ULTRA_2, b"W\x0fN\x01\x01\x00\x00"),
         (SwitchbotModel.LOCK_VISION, b"W\x0fN\x01\x01\x00\x80"),
         (SwitchbotModel.LOCK_VISION_PRO, b"W\x0fN\x01\x01\x00\x80"),
         (SwitchbotModel.LOCK_PRO_WIFI, b"W\x0fN\x01\x01\x10\x82"),
@@ -94,6 +96,7 @@ async def test_lock(model: str, command: bytes):
         (SwitchbotModel.LOCK_LITE, b"W\x0fN\x01\x01\x10\x81"),
         (SwitchbotModel.LOCK_PRO, b"W\x0fN\x01\x01\x10\x84"),
         (SwitchbotModel.LOCK_ULTRA, b"W\x0fN\x01\x01\x10\x83"),
+        (SwitchbotModel.LOCK_ULTRA_2, b"W\x0fN\x01\x01\x00\x80"),
         (SwitchbotModel.LOCK_VISION, b"W\x0fN\x01\x01\x00\x80"),
         (SwitchbotModel.LOCK_VISION_PRO, b"W\x0fN\x01\x01\x00\x80"),
         (SwitchbotModel.LOCK_PRO_WIFI, b"W\x0fN\x01\x01\x10\x81"),
@@ -123,6 +126,7 @@ async def test_unlock(model: str, command: bytes):
         SwitchbotModel.LOCK_LITE,
         SwitchbotModel.LOCK_PRO,
         SwitchbotModel.LOCK_ULTRA,
+        SwitchbotModel.LOCK_ULTRA_2,
         SwitchbotModel.LOCK_VISION,
         SwitchbotModel.LOCK_VISION_PRO,
         SwitchbotModel.LOCK_PRO_WIFI,
@@ -224,6 +228,19 @@ def test_parse_basic_data():
     result = device._parse_basic_data(basic_data)
     assert result["battery"] == 100
     assert result["firmware"] == 0.1
+
+
+def test_lock_ultra_2_uses_advertisement_for_basic_data():
+    """Lock Ultra Max does not parse its undocumented basic-info response."""
+    device = create_device_for_command_testing(SwitchbotModel.LOCK_ULTRA_2)
+    assert device._parse_basic_data(b"\x00\xf3\x01") == {}
+
+
+@pytest.mark.asyncio
+async def test_lock_ultra_2_skips_connected_basic_info():
+    """Lock Ultra Max retains the advertisement as its source of truth."""
+    device = create_device_for_command_testing(SwitchbotModel.LOCK_ULTRA_2)
+    assert await device.get_basic_info() is None
 
 
 @pytest.mark.parametrize(
@@ -786,6 +803,7 @@ async def test_half_lock_not_calibrated():
         SwitchbotModel.LOCK,
         SwitchbotModel.LOCK_LITE,
         SwitchbotModel.LOCK_PRO,
+        SwitchbotModel.LOCK_ULTRA_2,
         SwitchbotModel.LOCK_VISION,
         SwitchbotModel.LOCK_VISION_PRO,
         SwitchbotModel.LOCK_PRO_WIFI,
