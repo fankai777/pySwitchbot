@@ -1,0 +1,27 @@
+tests/test_adv_parser.py
+  s_e4582bfbf454bb::t_5531062f480e4c 3040,3065,3276,3369
+switchbot/const/__init__.py
+  s_e4582bfbf454bb::t_5531062f480e4c 129
+tests/test_lock.py
+  s_e4582bfbf454bb::t_45d039d349c43c 28,69,99,129,233,235,240-254,817
+switchbot/devices/lock.py
+  s_e4582bfbf454bb::t_5531062f480e4c 25,35,45,55,69,110,152
+switchbot/adv_parser.py
+  s_e4582bfbf454bb::t_5531062f480e4c 902,908
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "8379f07f5944d20b2386b14cef153a5c5b31ea16",
+  "prompts": {},
+  "sessions": {
+    "s_e4582bfbf454bb": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a017f6-f459-7de3-85d4-67a29c341c98",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "Fan Kai <fankai@onero.com>"
+    }
+  }
+}
