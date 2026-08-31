@@ -22,7 +22,7 @@ COMMAND_LOCK_INFO = {
     SwitchbotModel.LOCK_LITE: f"{COMMAND_HEADER}0f4f8101",
     SwitchbotModel.LOCK_PRO: f"{COMMAND_HEADER}0f4f8104",
     SwitchbotModel.LOCK_ULTRA: f"{COMMAND_HEADER}0f4f8107",
-    SwitchbotModel.LOCK_ULTRA_2: f"{COMMAND_HEADER}0f4f8107",
+    SwitchbotModel.LOCK_ULTRA_MAX: f"{COMMAND_HEADER}0f4f8107",
     SwitchbotModel.LOCK_VISION_PRO: f"{COMMAND_HEADER}0f4f8102",
     SwitchbotModel.LOCK_VISION: f"{COMMAND_HEADER}0f4f8102",
     SwitchbotModel.LOCK_PRO_WIFI: f"{COMMAND_HEADER}0f4f810a",
@@ -32,7 +32,7 @@ COMMAND_UNLOCK = {
     SwitchbotModel.LOCK_LITE: f"{COMMAND_HEADER}0f4e01011080",
     SwitchbotModel.LOCK_PRO: f"{COMMAND_HEADER}0f4e0101000080",
     SwitchbotModel.LOCK_ULTRA: f"{COMMAND_HEADER}0f4e0101000080",
-    SwitchbotModel.LOCK_ULTRA_2: f"{COMMAND_HEADER}0f4e0101000080",
+    SwitchbotModel.LOCK_ULTRA_MAX: f"{COMMAND_HEADER}0f4e0101000080",
     SwitchbotModel.LOCK_VISION_PRO: f"{COMMAND_HEADER}0f4e0101000080",
     SwitchbotModel.LOCK_VISION: f"{COMMAND_HEADER}0f4e0101000080",
     SwitchbotModel.LOCK_PRO_WIFI: f"{COMMAND_HEADER}0f4e0101000080",
@@ -42,7 +42,7 @@ COMMAND_UNLOCK_WITHOUT_UNLATCH = {
     SwitchbotModel.LOCK_LITE: f"{COMMAND_HEADER}0f4e010110a0",
     SwitchbotModel.LOCK_PRO: f"{COMMAND_HEADER}0f4e01010000a0",
     SwitchbotModel.LOCK_ULTRA: f"{COMMAND_HEADER}0f4e01010000a0",
-    SwitchbotModel.LOCK_ULTRA_2: f"{COMMAND_HEADER}0f4e01010000a0",
+    SwitchbotModel.LOCK_ULTRA_MAX: f"{COMMAND_HEADER}0f4e01010000a0",
     SwitchbotModel.LOCK_VISION_PRO: f"{COMMAND_HEADER}0f4e01010000a0",
     SwitchbotModel.LOCK_VISION: f"{COMMAND_HEADER}0f4e01010000a0",
     SwitchbotModel.LOCK_PRO_WIFI: f"{COMMAND_HEADER}0f4e01010000a0",
@@ -52,7 +52,7 @@ COMMAND_LOCK = {
     SwitchbotModel.LOCK_LITE: f"{COMMAND_HEADER}0f4e01011000",
     SwitchbotModel.LOCK_PRO: f"{COMMAND_HEADER}0f4e0101000000",
     SwitchbotModel.LOCK_ULTRA: f"{COMMAND_HEADER}0f4e0101000000",
-    SwitchbotModel.LOCK_ULTRA_2: f"{COMMAND_HEADER}0f4e0101000000",
+    SwitchbotModel.LOCK_ULTRA_MAX: f"{COMMAND_HEADER}0f4e0101000000",
     SwitchbotModel.LOCK_VISION_PRO: f"{COMMAND_HEADER}0f4e0101000000",
     SwitchbotModel.LOCK_VISION: f"{COMMAND_HEADER}0f4e0101000000",
     SwitchbotModel.LOCK_PRO_WIFI: f"{COMMAND_HEADER}0f4e0101000000",
@@ -66,7 +66,7 @@ COMMAND_ENABLE_NOTIFICATIONS = {
     SwitchbotModel.LOCK_LITE: f"{COMMAND_HEADER}0e01001e00008101",
     SwitchbotModel.LOCK_PRO: f"{COMMAND_HEADER}0e01001e00008104",
     SwitchbotModel.LOCK_ULTRA: f"{COMMAND_HEADER}0e01001e00008107",
-    SwitchbotModel.LOCK_ULTRA_2: f"{COMMAND_HEADER}0e01001e00008107",
+    SwitchbotModel.LOCK_ULTRA_MAX: f"{COMMAND_HEADER}0e01001e00008107",
     SwitchbotModel.LOCK_VISION_PRO: f"{COMMAND_HEADER}0e01001e00008102",
     SwitchbotModel.LOCK_VISION: f"{COMMAND_HEADER}0e01001e00008102",
     SwitchbotModel.LOCK_PRO_WIFI: f"{COMMAND_HEADER}0e01001e0000810a",
@@ -107,7 +107,7 @@ class SwitchbotLock(SwitchbotSequenceDevice, SwitchbotEncryptedDevice):
             SwitchbotModel.LOCK_PRO,
             SwitchbotModel.LOCK_LITE,
             SwitchbotModel.LOCK_ULTRA,
-            SwitchbotModel.LOCK_ULTRA_2,
+            SwitchbotModel.LOCK_ULTRA_MAX,
             SwitchbotModel.LOCK_VISION_PRO,
             SwitchbotModel.LOCK_VISION,
             SwitchbotModel.LOCK_PRO_WIFI,
@@ -149,7 +149,7 @@ class SwitchbotLock(SwitchbotSequenceDevice, SwitchbotEncryptedDevice):
 
     def _parse_basic_data(self, basic_data: bytes) -> dict[str, Any]:
         """Parse basic data from lock."""
-        if self._model is SwitchbotModel.LOCK_ULTRA_2:
+        if self._model is SwitchbotModel.LOCK_ULTRA_MAX:
             # Lock Ultra Max's basic-info response format is not documented.
             # Its advertisement already carries the reliable battery and state
             # data, so never overwrite that data with an unverified response.
@@ -186,10 +186,6 @@ class SwitchbotLock(SwitchbotSequenceDevice, SwitchbotEncryptedDevice):
 
     async def get_basic_info(self) -> dict[str, Any] | None:
         """Get device basic status."""
-        if self._model is SwitchbotModel.LOCK_ULTRA_2:
-            # Keep the advertisement parser as the source of truth until the
-            # device-specific connected status response is documented.
-            return None
         lock_raw_data = await self._get_lock_info()
         if not lock_raw_data:
             return None

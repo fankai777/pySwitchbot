@@ -3037,7 +3037,7 @@ def test_hub3_with_empty_data() -> None:
             },
             b"\x00\x11\x9f\xb8",
             "Lock Ultra Max",
-            SwitchbotModel.LOCK_ULTRA_2,
+            SwitchbotModel.LOCK_ULTRA_MAX,
         ),
         AdvTestCase(
             b"\xb0\xe9\xfe\x44\x55\x66\x2b\x10\x00\x50\x00\x00",
@@ -3062,7 +3062,7 @@ def test_hub3_with_empty_data() -> None:
             },
             b"\x01\x11\x9f\xb8",
             "Lock Ultra Max",
-            SwitchbotModel.LOCK_ULTRA_2,
+            SwitchbotModel.LOCK_ULTRA_MAX,
         ),
     ],
 )
@@ -3273,7 +3273,7 @@ def test_lock_active(test_case: AdvTestCase) -> None:
             },
             b"\x00\x11\x9f\xb8",
             "Lock Ultra Max",
-            SwitchbotModel.LOCK_ULTRA_2,
+            SwitchbotModel.LOCK_ULTRA_MAX,
         ),
     ],
 )
@@ -3366,7 +3366,7 @@ def test_lock_passive(test_case: AdvTestCase) -> None:
             {},
             b"\x00\x11\x9f\xb8",
             "Lock Ultra Max",
-            SwitchbotModel.LOCK_ULTRA_2,
+            SwitchbotModel.LOCK_ULTRA_MAX,
         ),
     ],
 )
